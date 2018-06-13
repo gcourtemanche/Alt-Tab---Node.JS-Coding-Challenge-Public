@@ -30,7 +30,7 @@
     no-undefined: "error",
     no-unreachable: "warn",
     no-unused-expressions: "warn",
-    no-unused-var: "error",
+    no-unused-vars: "error",
     no-with: "error",
     semi: ["error", "always"],
     space-before-function-paren: ["error", "never"],
