@@ -4,14 +4,17 @@
   "private": true,
   "scripts": {
     "start": "node app.js",
-    "test": "JWT_SECRET=upstack-challenge mocha --recursive"
+    "test": "NODE_ENV='test' JWT_SECRET='upstack-challenge' mocha --recursive",
+    "test-with-log": "DEBUG='alttab:*' JWT_SECRET='upstack-challenge' mocha --recursive"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
+    "debug": "^3.1.0",
     "express": "~4.11.1",
     "install": "^0.11.0",
     "jsonwebtoken": "^8.3.0",
     "mongoose": "^5.1.5",
+    "morgan": "^1.9.0",
     "npm": "^6.1.0"
   },
   "devDependencies": {
