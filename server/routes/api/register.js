@@ -9,8 +9,8 @@ module.exports = async(req, res) => {
   const { email, password, name } = req.body;
   const log = (message) => debug(`${message}; email: ${email}, name: ${name}`);
 
-  if (!password) {
-    log('No password');
+  if (!email || !password) {
+    log('Missing password or email');
     return res.status(400).send();
   }
 
