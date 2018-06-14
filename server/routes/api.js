@@ -2,9 +2,11 @@ const express = require('express');
 const router = express.Router();
 
 const User = require('../models/User');
+const verifyJWT = require('../middlewares/verifyJWT');
+const signJWT = require('../helpers/signJWT');
 
 // POST /api/register
-router.post('/register', function(req, res) {
+router.post('/register', (req, res) => {
   const { email, password, name } = req.body;
 
   User.create({ email, password, name }, (err, user) => {
@@ -15,12 +17,14 @@ router.post('/register', function(req, res) {
       return res.status(500).send();
     }
 
-    return res.status(201).send({ token: user._id });
+    const token = signJWT(user._id);
+
+    return res.status(201).send({ token: token });
   });
 });
 
 // POST /api/login
-router.post('/login', function(req, res) {
+router.post('/login', (req, res) => {
   const { email, password } = req.body;
 
   User.findOne({ email, password }, (err, user) => {
@@ -29,17 +33,16 @@ router.post('/login', function(req, res) {
       return res.status(400).send();
     }
 
-    return res.status(200).send({ token: user._id });
+    const token = signJWT(user._id);
+
+    return res.status(200).send({ token: token });
   });
 });
 
 // GET /api/profile
-router.get('/profile', function(req, res) {
-  const token = req.headers.authorization;
-  if (!token) return res.status(401).send();
+router.get('/profile', verifyJWT, (req, res) => {
 
-  const id = token.slice(7);
-  User.findById(id, (err, user) => {
+  User.findById(req.userId, (err, user) => {
     if (err) {
       console.error(err);
       return res.status(400).send();

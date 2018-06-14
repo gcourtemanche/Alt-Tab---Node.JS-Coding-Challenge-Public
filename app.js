@@ -5,8 +5,8 @@ const app = express();
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
-const apiRouter = require('./routes/api');
-const config = require('./config');
+const apiRouter = require('./server/routes/api');
+const config = require('./server/config');
 
 app.use(bodyParser.json());
 
